@@ -1,0 +1,71 @@
+import { User } from "../model/user.model";
+import Joi from "joi";
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import express from 'express'
+
+const router = express.Router();
+
+const handleLogin = async(req, res, next) => {
+
+
+    try {
+
+        //check for error
+        const {error} = validate(req.body);
+        if (error){
+            return res.status(400).send({message: error.details[0].message});
+    
+        }
+    
+        //check if user exists 
+        const user = await User.findOne({email: req.body.email})
+        if(!user) {
+            return res.status.apply(401).send({message: "invalid email or password"})
+        }
+    
+        //check if password valid
+        const validPassword = await bcrypt.compare(
+            req.body.password,
+            user.password
+        );
+        if(!validPassword){
+            return res.status(401).send({message: "Invalid Email or Password"});
+           
+        }
+
+        //create and sign JWT token with user.Name?
+    
+        const accessToken = jwt.sign(
+            {email: user.email},
+            process.env.ACCESS_TOKEN_SECRET,
+            {expiresIn : '10mn'}
+        )
+    
+        //const token = user.generateAuthToken();
+        res.status(200).send({ data: accessToken, message: "logged in successfully" });
+    } catch (error) {
+        res.status(500).send({ message: "Internal Server Error" });
+    }
+    
+    
+   
+}
+
+// const handleLogout = (req, res) => {
+//     const cookies = req.cookies;
+//     if (!cookies?.jwt) return res.sendStatus(204); //No content
+//     res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+//     res.json({ message: 'Cookie cleared' });
+//   };
+
+const validate = (data) => {
+    const schema = Joi.object({
+      email: Joi.string().email().required().label('Email'),
+      password: Joi.string().required().label('Password'),
+    });
+    return schema.validate(data);
+  };
+
+
+export {handleLogin}

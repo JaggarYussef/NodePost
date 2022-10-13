@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 
 
-exports = () : void => {
+ const connect = () : void => {
 
 
     try {
@@ -17,3 +17,5 @@ exports = () : void => {
         console.error(error.message);
     }
 }
+
+export {connect}
