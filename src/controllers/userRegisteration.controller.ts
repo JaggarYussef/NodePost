@@ -1,10 +1,10 @@
 import express from "express"
 import {User, validate} from "../model/user.model";
 import bcrypt from "bcrypt";
-import axios from "axios";
+
 
 const app = express();
-const router= express.Route();
+const router= express.Router();
 
 
 
@@ -22,14 +22,14 @@ router.get("/", (req, res) => {
 })
 
 
-router.post("/", async (req, res) => {
+const handleNewUser = async ( req, res) => {
 
     //console.log(req.body);
 	console.log("email: " + req.body.email);
 	console.log("password: " + req.body.password);
 	try {
 		
-		const { error } = validate(req.body);
+		const error : any = validate(req.body);
 		
 		if (error)
 			return res.status(400).send({ message: error.details[0].message });
@@ -49,6 +49,8 @@ router.post("/", async (req, res) => {
 	} catch (error) {
 		res.status(500).send({ message: "Internal Server Error" });
 	}
-});
+} 
 
-export {router};
+
+
+export {handleNewUser};

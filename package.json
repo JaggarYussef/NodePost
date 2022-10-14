@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon server.ts"
+    "devStart": "nodemon --watch 'src/**' --exec  \"ts-node\" src/server.ts --e 'ts,js,json'"
   },
   "author": "Jaggar Yussef",
   "license": "ISC",

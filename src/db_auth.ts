@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 
 
     try {
-        mongoose.connect(process.env.DB, () => {
+        mongoose.connect(process.env.MONGODB_ACCESS, () => {
             console.log('connected to database successfuly');
             
         });
@@ -18,4 +18,4 @@ import mongoose from 'mongoose';
     }
 }
 
-export {connect}
+export default {connect}

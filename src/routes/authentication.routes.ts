@@ -5,8 +5,8 @@ import {handleLogin} from '../controllers/auth.Controller'
 
 
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.post('/', handleLogin)
+authRouter.post('/', handleLogin)
 
-export default {router}
+export {authRouter}
