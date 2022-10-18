@@ -1,13 +1,10 @@
 require('dotenv').config();
 import mongoose from 'mongoose';
 
-
-
  const connect = () : void => {
 
-
     try {
-        mongoose.connect(process.env.MONGODB_ACCESS, () => {
+        mongoose.connect(process.env.MONGODB_ACCESS,  {family:4}, () => {
             console.log('connected to database successfuly');
             
         });
@@ -18,4 +15,4 @@ import mongoose from 'mongoose';
     }
 }
 
-export default {connect}
+export default connect;

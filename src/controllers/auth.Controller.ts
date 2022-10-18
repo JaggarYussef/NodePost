@@ -24,6 +24,9 @@ const handleLogin = async(req, res, next) => {
             return res.status.apply(401).send({message: "invalid email or password"})
         }
     
+        console.log("req.body password= " + req.body.password);
+        console.log("user password= " + user.password);
+        
         //check if password valid
         const validPassword = await bcrypt.compare(
             req.body.password,
@@ -61,8 +64,10 @@ const handleLogin = async(req, res, next) => {
 
 const validate = (data) => {
     const schema = Joi.object({
-      email: Joi.string().email().required().label('Email'),
+      
+      email:    Joi.string().email().required().label('Email'),
       password: Joi.string().required().label('Password'),
+      userName: Joi.string().required().label("Username"),
     });
     return schema.validate(data);
   };

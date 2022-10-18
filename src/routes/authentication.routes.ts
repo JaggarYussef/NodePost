@@ -9,4 +9,4 @@ const authRouter = express.Router();
 
 authRouter.post('/', handleLogin)
 
-export {authRouter}
+export default authRouter;
