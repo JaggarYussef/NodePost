@@ -22,7 +22,7 @@ userSchema.methods.generateAuthToken = function () {
 
 const User = mongoose.model("user", userSchema)
 
-const validate = async (data) => {
+const validate = (data) => {
     const schema = joi.object({
         email:     joi.string().email().required().label("Email"),
         password:  passwordComplex().required().label("Password"),
@@ -30,7 +30,7 @@ const validate = async (data) => {
 
     })
    
-    return await schema.validate(data)
+    return  schema.validate(data)
 }
 
 

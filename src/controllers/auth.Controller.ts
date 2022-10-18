@@ -42,13 +42,13 @@ const handleLogin = async(req, res, next) => {
         const accessToken = jwt.sign(
             {email: user.email},
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn : '10mn'}
+            {expiresIn : '20h'}
         )
     
         //const token = user.generateAuthToken();
         res.status(200).send({ data: accessToken, message: "logged in successfully" });
     } catch (error) {
-        res.status(500).send({ message: "Internal Server Error" });
+        res.send({message: error.message})
     }
     
     
