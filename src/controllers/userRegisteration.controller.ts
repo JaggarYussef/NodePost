@@ -36,7 +36,7 @@ const handleNewUser = async ( req, res) => {
 
     //console.log(req.body);
 	console.log("UserName: " + req.body.userName);
-	console.log("email: " + req.body.email);
+	console.log("email: " +    req.body.email);
 	console.log("password: " + req.body.password);
 	
 	try {

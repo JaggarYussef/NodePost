@@ -3,6 +3,7 @@ import Joi from "joi";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import express from 'express'
+import verifyJWT from "../middelwares/tokenVerification.js";
 
 const router = express.Router();
 
