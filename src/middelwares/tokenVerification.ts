@@ -15,7 +15,7 @@ const verifyJWT = (req : IAuthRequest, res: Response, next : NextFunction ) => {
     }
 
     const token : any= authHeader.split(' ')[1]
-    console.log('this is token : ' + token);
+   // console.log('this is token : ' + token);
 
     jwt.verify(
         token,
