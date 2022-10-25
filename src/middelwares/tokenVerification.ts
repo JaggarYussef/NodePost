@@ -6,15 +6,17 @@ import { NextFunction, Request, Response } from 'express'
 interface IAuthRequest extends Request {headers: {Authorization : string}}
 
 const verifyJWT = (req : IAuthRequest, res: Response, next : NextFunction ) => {
-    const authHeader  =   req.headers.Authorization
+    const authHeader  =   req.headers["x-access-token"]
 
-    console.log("this is auth header  : " + req.headers.Authorization)
+   
 
-    if (!authHeader?.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Unauthorized' })
-    }
+     // check header or url parameters or post parameters for token
+    var token = req.headers['x-access-token'];
+    if (!token) 
+    return res.status(403).send({ auth: false, message: 'No token provided.' });
 
-    const token : any= authHeader.split(' ')[1]
+
+    
    // console.log('this is token : ' + token);
 
     jwt.verify(
@@ -22,9 +24,9 @@ const verifyJWT = (req : IAuthRequest, res: Response, next : NextFunction ) => {
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if (err) return res.status(403).json({ message: 'Forbidden' })
-            console.log("verifyJWTS: decoded email= " + decoded.email);
+            console.log("verifyJWTS: decoded email= " + decoded[1]);
             req.body.email = decoded.email
-           // next()
+            next()
         }
     )
 
