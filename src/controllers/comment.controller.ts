@@ -16,6 +16,8 @@ app.use(express.json());
 
 const postComment = async (req, res) => {
 
+    console.log('blogpost id = ' + req.params.blogpostId);
+    
     const user : any = await User.findOne({email: req.body.email}, {password : 0}, (err,response) => {
         if (err) return res.status(404).json({ message: 'No user found' });
     }).clone()
@@ -26,7 +28,7 @@ const postComment = async (req, res) => {
     const formatedDate = date.format(now, 'YYYY/MM/DD HH:mm:ss')
     new comment({
         userId: user._id,
-        blogPostId: req.body.blogPostId,
+        blogPostId: req.params.blogpostId,
         content: req.body.commentContent,
         date: formatedDate
     }).save();
