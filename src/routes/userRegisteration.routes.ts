@@ -1,8 +1,10 @@
 import express from 'express';
-import {handleNewUser} from '../controllers/userRegisteration.controller'
+import {handleNewUser, test} from '../controllers/userRegisteration.controller'
 
 const registerationRouter = express.Router();
-registerationRouter.post("./", handleNewUser)
+registerationRouter.route("/")
+                    .get (test)
+                    .post(handleNewUser)
 
 
 export default registerationRouter;

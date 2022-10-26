@@ -3,6 +3,7 @@ import Joi from "joi";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import express from 'express'
+import verifyJWT from "../middelwares/tokenVerification.js";
 
 const router = express.Router();
 
@@ -24,6 +25,9 @@ const handleLogin = async(req, res, next) => {
             return res.status.apply(401).send({message: "invalid email or password"})
         }
     
+        console.log("req.body password= " + req.body.password);
+        console.log("user password= " + user.password);
+        
         //check if password valid
         const validPassword = await bcrypt.compare(
             req.body.password,
@@ -39,13 +43,13 @@ const handleLogin = async(req, res, next) => {
         const accessToken = jwt.sign(
             {email: user.email},
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn : '10mn'}
+            {expiresIn : '20h'}
         )
     
         //const token = user.generateAuthToken();
         res.status(200).send({ data: accessToken, message: "logged in successfully" });
     } catch (error) {
-        res.status(500).send({ message: "Internal Server Error" });
+        res.send({message: error.message})
     }
     
     
@@ -61,8 +65,10 @@ const handleLogin = async(req, res, next) => {
 
 const validate = (data) => {
     const schema = Joi.object({
-      email: Joi.string().email().required().label('Email'),
+      
+      email:    Joi.string().email().required().label('Email'),
       password: Joi.string().required().label('Password'),
+      userName: Joi.string().required().label("Username"),
     });
     return schema.validate(data);
   };
