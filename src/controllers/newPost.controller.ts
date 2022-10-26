@@ -6,7 +6,7 @@ import { Jwt } from "jsonwebtoken";
 import { User } from "../model/user.model";
 import date from 'date-and-time'
 import blogPost from "../model/blogPost.model";
-
+import { IUser } from "../interfaces/interfaces";
 
 
 const app =  express();
@@ -33,7 +33,7 @@ const createPost = async (req : Request, res : Response)=> {
    // const token = req.headers['x-access-token']
     console.log("emaiiil " + req.body.email);
 
-    const userObj : any = await User.findOne({email : req.body.email }, {password:  0 }, (err, response) => {
+    const userObj : any  = await User.findOne({email : req.body.email }, {password:  0 }, (err, response) => {
 
 
         if (err) return res.status(404).json({ message: 'No user found' });
@@ -49,9 +49,10 @@ const createPost = async (req : Request, res : Response)=> {
     const now = new Date();
     const formatedDate = date.format(now, 'YYYY/MM/DD HH:mm:ss')
    
-   
-    
-    const userId  : typeof userObj._id = userObj._id;
+ 
+//    const userTest  : typeof userObj.test= userObj.test;
+
+    const userId  : any = userObj._id;
     const title   : String = req.body.title;
     const content : String = req.body.content;
     const timeStamp = formatedDate;
@@ -73,4 +74,10 @@ const createPost = async (req : Request, res : Response)=> {
 }
 
 
-export {getPost, createPost}
+const tester = async (req, res) => {
+    console.log('secondd get');
+    
+}
+
+
+export {getPost, createPost, tester}

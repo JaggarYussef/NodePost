@@ -5,6 +5,7 @@ import connect from './db_auth';
 import userRouter from './routes/userRegisteration.routes'
 import authRouter from "./routes/authentication.routes";
 import newPostRouter from './routes/blogPost.routes'
+import commentRouter from './routes/comment.routes';
 //Database
 connect();
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use('/api/auth', authRouter);
 app.use('/api/regis', userRouter);
 app.use('/api/blogpost', newPostRouter );
+app.use('/api/comment', commentRouter );
 
 app.listen(port, () => console.log(`Server is running on PORT ${port}`))
  
