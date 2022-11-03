@@ -1,6 +1,6 @@
 import express from "express";
 import verifyJWT from "../middelwares/tokenVerification";
-import postComment from "../controllers/comment.controller";
+import {postComment} from "../controllers/comment.controller";
 
 
 const  commentRouter= express.Router();

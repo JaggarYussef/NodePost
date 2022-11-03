@@ -15,24 +15,52 @@ app.use(express.json());
 //app.use(cors());
 
 const postComment = async (req, res) => {
-
-    console.log('blogpost id = ' + req.params.blogpostId);
-    
-    const user : any = await User.findOne({email: req.body.email}, {password : 0}, (err,response) => {
+    const userobjID : any = await User.findOne({email: req.body.email}, {password : 0}, (err,response) => {
         if (err) return res.status(404).json({ message: 'No user found' });
+        
     }).clone()
-
-   // const postId : any  = await blogPost.findOne({_id : req.body.blogPostId}).clone()
 
     const now = new Date();
     const formatedDate = date.format(now, 'YYYY/MM/DD HH:mm:ss')
-    new comment({
-        userId: user._id,
+
+    const newComment  = await new comment({
+        userId: userobjID,
         blogPostId: req.params.blogpostId,
         content: req.body.commentContent,
         date: formatedDate
     }).save();
+
+ 
+    // await blogPost.findByIdAndUpdate({_id: req.params.blogpostId}, {comments : newComment._id},(err, response) => {
+    //     if(err) res.status(404).json({message : err.message})
+    //     console.log("blogpost id + " + req.params.blogpostId);
+        
+    //     console.log('comment id :' + newComment._id);
+        
+    // }).clone()
+
+    await blogPost.findOne({_id: req.params.blogpostId}, (err, response) => {
+        if(err) res.status(404).json({message : err.message})
+       console.log('from inside ' + response.title)
+       console.log('comment id :' + newComment._id);
+       response.comments.push({commentId: newComment._id})
+       response.title = "mofifed"
+       response.save();
+    }).clone()
+
+    res.status(200).send('commented posted')
     
 }
 
-export default postComment;
+
+const getComments = async (req, res) => {
+    console.log("getlikes comments ");
+    const commentsArray= await blogPost.find({_id: req.params.blogpostId}, (err, response) => {
+        if(err) res.status(404).json({message : err.message})
+    }).clone()
+
+    // res.send("commentsArray.comments")
+    res.send(commentsArray)
+}
+
+export {getComments, postComment};
