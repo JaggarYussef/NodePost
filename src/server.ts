@@ -6,6 +6,8 @@ import userRouter from './routes/userRegisteration.routes'
 import authRouter from "./routes/authentication.routes";
 import newPostRouter from './routes/blogPost.routes'
 import commentRouter from './routes/comment.routes';
+import searchRouter  from'./routes/search.routes';
+
 //Database
 connect();
 
@@ -26,6 +28,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/regis', userRouter);
 app.use('/api/blogpost', newPostRouter );
 app.use('/api/comment', commentRouter );
+app.use('/api/search', searchRouter)
 
 app.listen(port, () => console.log(`Server is running on PORT ${port}`))
  

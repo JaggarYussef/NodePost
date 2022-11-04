@@ -43,10 +43,10 @@ const handleNewUser = async ( req, res) => {
 	
 		const {error} =  validate(req.body);
 
-		if (error)
-			
+		if (error){
 			return res.status(400).send({ message: error.details[0].message });
-			
+		}
+						
 		const user = await User.findOne({ email: req.body.email });
 		
 		if (user)
@@ -61,7 +61,7 @@ const handleNewUser = async ( req, res) => {
 		await new User({ ...req.body, password: hashPassword }).save();
 		res.status(201).send({ message: "User created successfully" });
 	} catch (error) {
-		res.status(500).send({ message: "Error creating user" });
+		res.status(500).send({ message: error.message});
 	}
 } 
 

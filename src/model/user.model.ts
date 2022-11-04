@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-//import { Schema, model, connect } from 'mongoose';
+import { Schema } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import joi from 'joi';
 import passwordComplex from 'joi-password-complexity';
@@ -8,7 +8,8 @@ import passwordComplex from 'joi-password-complexity';
 const userSchema = new mongoose.Schema ({
     userName: {type: String, required: true},
     email: {type: String, required: true},
-    password: {type: String, required: true} 
+    password: {type: String, required: true},
+    likes : [{blogpostId : String}]
 })
 
 
