@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
  const connect = () : void => {
 
     try {
-        mongoose.connect(process.env.MONGODB_ACCESS,  {family:4}, () => {
+         mongoose.connect(process.env.MONGODB_ACCESS,  {family:4}, () => {
             console.log('connected to database successfuly');
             
         });

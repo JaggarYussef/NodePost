@@ -9,7 +9,7 @@ const newPostRouter = express.Router();
 newPostRouter.route('/')
                 .get(verifyJWT , getPost)
                 .post(verifyJWT, createPost)
-                .get(tester)
+                
 newPostRouter.route('/:blogpostId')
                 .post(verifyJWT, postComment)
                 .get(verifyJWT, getComments)

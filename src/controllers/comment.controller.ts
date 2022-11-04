@@ -24,7 +24,7 @@ const postComment = async (req, res) => {
     const formatedDate = date.format(now, 'YYYY/MM/DD HH:mm:ss')
 
     const newComment  = await new comment({
-        userId: userobjID,
+        userId: userobjID._id,
         blogPostId: req.params.blogpostId,
         content: req.body.commentContent,
         date: formatedDate
