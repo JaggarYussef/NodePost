@@ -99,7 +99,8 @@ retrieve the bogposts made by the user
 
 
 
-
+## Issues ****
+ Having problem deploying the application to Heroku.
 
 
 
@@ -111,6 +112,8 @@ NodePost uses a number of open source projects to work properly:
 - [markdown-it] - Markdown parser done right. Fast and easy to extend.
 - [node.js] - evented I/O for the backend
 - [Express] - fast node.js network app framework [@tjholowaychuk]
+
+
 
 
 Made by  Jaggar Yussef 
