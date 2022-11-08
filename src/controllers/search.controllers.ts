@@ -15,7 +15,7 @@ const getAllUsers= async (req: Request, res: Response)=> {
 
 const getUserById = async (req: Request, res: Response) => {
     const id = req.params.userId;
-    const oneUser=  await User.findById(id);
+    const oneUser=  await User.findById(id, {password: 0});
     res.send(oneUser)
 }
 
