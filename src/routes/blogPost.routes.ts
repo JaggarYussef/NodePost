@@ -1,5 +1,5 @@
 import express from 'express';
-import {createPost, getPost} from '../controllers/newPost.controller'
+import {createPost} from '../controllers/newPost.controller'
 import verifyJWT from '../middelwares/tokenVerification';
 import {postComment, getComments} from '../controllers/comment.controller';
 import {likePost, getLikedPosts} from '../controllers/likePost.controller';
@@ -7,7 +7,6 @@ import {likePost, getLikedPosts} from '../controllers/likePost.controller';
 
 const newPostRouter = express.Router();
 newPostRouter.route('/')
-                .get(verifyJWT , getPost)
                 .post(verifyJWT, createPost)
                 
 newPostRouter.route('/:blogpostId/comment')

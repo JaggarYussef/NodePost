@@ -9,30 +9,21 @@ import blogPost from "../model/blogPost.model";
 import { IUser } from "../interfaces/interfaces";
 
 
-const app =  express();
-//Here we are configuring express to use body-parser as middle-ware.
-app.use(express.urlencoded({extended: true}));
-// To parse the incoming requests with JSON payloads
-app.use(express.json());
-//app.use(cors());
-app.use(verifyJWT)
+
+// const app =  express();
+// //Here we are configuring express to use body-parser as middle-ware.
+// app.use(express.urlencoded({extended: true}));
+// // To parse the incoming requests with JSON payloads
+// app.use(express.json());
+// //app.use(cors());
+// app.use(verifyJWT)
+
 
 interface IAuthRequest extends Request {headers: {Authorization : string}}
 
-const getPost = async (req : IAuthRequest, res : Response, next : NextFunction) => {
-    
-    const token = req.headers['x-access-token']
-    
-    console.log("emaiiil " + req.body.email);
-    res.send('hey')
-    
-}
-
 
 const createPost = async (req : Request, res : Response)=> {
-   // const token = req.headers['x-access-token']
- 
-
+   
     const userObj : any  = await User.findOne({email : req.body.email }, {password:  0 }, (err, response) => {
 
 
@@ -62,22 +53,10 @@ const createPost = async (req : Request, res : Response)=> {
         date: timeStamp,
         
      }).save((err, response) => {
-       if (err) return res.json({message: err.message });
- 
-       
+       if (err) return res.json({message: err.message });  
        res.send({message: `blogpost with id: ${response._id} has been added`})
 
      })
-
-    //  blogPost.create({
-    //     user : userId,
-    //     title: title,
-    //     content: content,
-    //     date: timeStamp,
-    //  }), (err) => {
-    //     if (err) return res.json({message: err.message });
-
-    //  }
 
 
     
@@ -89,4 +68,4 @@ const createPost = async (req : Request, res : Response)=> {
 
 
 
-export {getPost, createPost}
+export {createPost}
