@@ -10,6 +10,8 @@ const db_auth_1 = __importDefault(require("./db_auth"));
 const userRegisteration_routes_1 = __importDefault(require("./routes/userRegisteration.routes"));
 const authentication_routes_1 = __importDefault(require("./routes/authentication.routes"));
 const blogPost_routes_1 = __importDefault(require("./routes/blogPost.routes"));
+const comment_routes_1 = __importDefault(require("./routes/comment.routes"));
+const search_routes_1 = __importDefault(require("./routes/search.routes"));
 //Database
 (0, db_auth_1.default)();
 const port = process.env.PORT;
@@ -19,8 +21,10 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(cors());
 //Routes
-app.use('/api/authenticate', authentication_routes_1.default);
-app.use('/api/registeration', userRegisteration_routes_1.default);
+app.use('/api/auth', authentication_routes_1.default);
+app.use('/api/regis', userRegisteration_routes_1.default);
 app.use('/api/blogpost', blogPost_routes_1.default);
+app.use('/api/comment', comment_routes_1.default);
+app.use('/api/search', search_routes_1.default);
 app.listen(port, () => console.log(`Server is running on PORT ${port}`));
 //# sourceMappingURL=server.js.map

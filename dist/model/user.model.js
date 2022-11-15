@@ -5,17 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validate = exports.User = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-//import { Schema, model, connect } from 'mongoose';
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const joi_1 = __importDefault(require("joi"));
 const joi_password_complexity_1 = __importDefault(require("joi-password-complexity"));
 const userSchema = new mongoose_1.default.Schema({
     userName: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    likes: [{ blogpostId: String }]
 });
 userSchema.methods.generateAuthToken = function () {
-    const token = jsonwebtoken_1.default.sign({ _id: this._id }, process.env.JWT_PRIVATE_KEY, {
+    const token = jsonwebtoken_1.default.sign({ id: this._id }, process.env.JWT_PRIVATE_KEY, {
         expiresIn: "7d",
     });
     return token;

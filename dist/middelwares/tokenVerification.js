@@ -5,19 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyJWT = (req, res, next) => {
-    const authHeader = req.headers.Authorization;
-    console.log("this is auth header  : " + req.headers);
-    if (!(authHeader === null || authHeader === void 0 ? void 0 : authHeader.startsWith('Bearer '))) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-    const token = authHeader.split(' ')[1];
-    console.log('this is token : ' + token);
+    const authHeader = req.headers["x-access-token"];
+    // check header or url parameters or post parameters for token
+    var token = req.headers['x-access-token'];
+    if (!token)
+        return res.status(403).send({ auth: false, message: 'No token provided.' });
+    // console.log('this is token : ' + token);
     jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err)
             return res.status(403).json({ message: 'Forbidden' });
-        console.log("verifyJWTS: decoded email= " + decoded.email);
+        console.log("verifyJWTS: decoded email= " + decoded[1]);
         req.body.email = decoded.email;
-        // next()
+        next();
     });
 };
 exports.default = verifyJWT;

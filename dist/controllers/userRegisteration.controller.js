@@ -36,8 +36,9 @@ const handleNewUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     console.log("password: " + req.body.password);
     try {
         const { error } = (0, user_model_1.validate)(req.body);
-        if (error)
+        if (error) {
             return res.status(400).send({ message: error.details[0].message });
+        }
         const user = yield user_model_1.User.findOne({ email: req.body.email });
         if (user)
             return res
@@ -49,7 +50,7 @@ const handleNewUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(201).send({ message: "User created successfully" });
     }
     catch (error) {
-        res.status(500).send({ message: "Error creating user" });
+        res.status(500).send({ message: error.message });
     }
 });
 exports.handleNewUser = handleNewUser;

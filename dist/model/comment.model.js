@@ -24,13 +24,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-const postSchema = new mongoose_1.default.Schema({
-    user: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "users" },
-    title: { type: String, required: true },
-    content: { type: String, required: true },
-    comments: [{ commentId: mongoose_1.Schema.Types.ObjectId }],
-    date: { type: String, required: true }
+const commentSchema = new mongoose_1.default.Schema({
+    userId: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'users' },
+    blogPostId: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'blogPost' },
+    content: { type: String },
+    date: { type: String, require: true }
 });
-const blogPost = mongoose_1.default.model('blogPost', postSchema);
-exports.default = blogPost;
-//# sourceMappingURL=blogPost.model.js.map
+exports.default = mongoose_1.default.model('comments', commentSchema);
+//# sourceMappingURL=comment.model.js.map
