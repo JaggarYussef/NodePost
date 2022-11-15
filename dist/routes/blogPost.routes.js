@@ -10,9 +10,8 @@ const comment_controller_1 = require("../controllers/comment.controller");
 const likePost_controller_1 = require("../controllers/likePost.controller");
 const newPostRouter = express_1.default.Router();
 newPostRouter.route('/')
-    .get(tokenVerification_1.default, newPost_controller_1.getPost)
     .post(tokenVerification_1.default, newPost_controller_1.createPost);
-newPostRouter.route('/:blogpostId')
+newPostRouter.route('/:blogpostId/comment')
     .post(tokenVerification_1.default, comment_controller_1.postComment)
     .get(tokenVerification_1.default, comment_controller_1.getComments);
 newPostRouter.route('/:blogpostId/like')

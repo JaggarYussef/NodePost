@@ -37,18 +37,11 @@ const postComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         content: req.body.commentContent,
         date: formatedDate
     }).save();
-    // await blogPost.findByIdAndUpdate({_id: req.params.blogpostId}, {comments : newComment._id},(err, response) => {
-    //     if(err) res.status(404).json({message : err.message})
-    //     console.log("blogpost id + " + req.params.blogpostId);
-    //     console.log('comment id :' + newComment._id);
-    // }).clone()
     yield blogPost_model_1.default.findOne({ _id: req.params.blogpostId }, (err, response) => {
         if (err)
             res.status(404).json({ message: err.message });
-        console.log('from inside ' + response.title);
         console.log('comment id :' + newComment._id);
         response.comments.push({ commentId: newComment._id });
-        response.title = "mofifed";
         response.save();
     }).clone();
     res.status(200).send('commented posted');

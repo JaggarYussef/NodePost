@@ -12,34 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tester = exports.createPost = exports.getPost = void 0;
-const express_1 = __importDefault(require("express"));
-const tokenVerification_1 = __importDefault(require("../middelwares/tokenVerification"));
+exports.createPost = void 0;
 const user_model_1 = require("../model/user.model");
 const date_and_time_1 = __importDefault(require("date-and-time"));
 const blogPost_model_1 = __importDefault(require("../model/blogPost.model"));
-const app = (0, express_1.default)();
-//Here we are configuring express to use body-parser as middle-ware.
-app.use(express_1.default.urlencoded({ extended: true }));
-// To parse the incoming requests with JSON payloads
-app.use(express_1.default.json());
-//app.use(cors());
-app.use(tokenVerification_1.default);
-const getPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.headers['x-access-token'];
-    console.log("emaiiil " + req.body.email);
-    res.send('hey');
-});
-exports.getPost = getPost;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const token = req.headers['x-access-token']
-    console.log("emaiiil " + req.body.email);
     const userObj = yield user_model_1.User.findOne({ email: req.body.email }, { password: 0 }, (err, response) => {
         if (err)
             return res.status(404).json({ message: 'No user found' });
-        //***************** Ask Dante ********************************** */   
-        // const userId : typeof response._id = response._id;
-        //***************** Ask Dante ********************************** */   
     }).clone();
     const now = new Date();
     const formatedDate = date_and_time_1.default.format(now, 'YYYY/MM/DD HH:mm:ss');
@@ -48,18 +28,17 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const title = req.body.title;
     const content = req.body.content;
     const timeStamp = formatedDate;
-    console.log(userId, '\n', title, '\n', content, '\n', timeStamp);
+    // console.log(userId, '\n', title, '\n', content,'\n', timeStamp);
     new blogPost_model_1.default({
         user: userId,
         title: title,
         content: content,
         date: timeStamp,
-    }).save();
-    res.send({ message: 'Blog has been uploaded' });
+    }).save((err, response) => {
+        if (err)
+            return res.json({ message: err.message });
+        res.send({ message: `blogpost with id: ${response._id} has been added` });
+    });
 });
 exports.createPost = createPost;
-const tester = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('secondd get');
-});
-exports.tester = tester;
 //# sourceMappingURL=newPost.controller.js.map

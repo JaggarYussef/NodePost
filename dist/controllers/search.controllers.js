@@ -23,7 +23,7 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getAllUsers = getAllUsers;
 const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.userId;
-    const oneUser = yield user_model_1.User.findById(id);
+    const oneUser = yield user_model_1.User.findById(id, { password: 0 });
     res.send(oneUser);
 });
 exports.getUserById = getUserById;

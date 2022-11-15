@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const userRegisteration_controller_1 = require("../controllers/userRegisteration.controller");
 const registerationRouter = express_1.default.Router();
 registerationRouter.route("/")
-    .get(userRegisteration_controller_1.test)
     .post(userRegisteration_controller_1.handleNewUser);
 exports.default = registerationRouter;
 //# sourceMappingURL=userRegisteration.routes.js.map
