@@ -10,8 +10,6 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {};
 
 const app = express();
 
-const router= express.Router();
-
 
 
 
@@ -24,20 +22,13 @@ app.use(express.json());
 
 
 
-const test = async (req, res ) => {
-
-
-	res.json({user: 'made'})
-
-}
-
 
 const handleNewUser = async ( req, res) => {
 
-    //console.log(req.body);
-	console.log("UserName: " + req.body.userName);
-	console.log("email: " +    req.body.email);
-	console.log("password: " + req.body.password);
+    // //console.log(req.body);
+	// console.log("UserName: " + req.body.userName);
+	// console.log("email: " +    req.body.email);
+	// console.log("password: " + req.body.password);
 	
 	try {
 	
@@ -67,4 +58,4 @@ const handleNewUser = async ( req, res) => {
 
 
 
-export {handleNewUser, test};
+export {handleNewUser};

@@ -31,20 +31,13 @@ const postComment = async (req, res) => {
     }).save();
 
  
-    // await blogPost.findByIdAndUpdate({_id: req.params.blogpostId}, {comments : newComment._id},(err, response) => {
-    //     if(err) res.status(404).json({message : err.message})
-    //     console.log("blogpost id + " + req.params.blogpostId);
-        
-    //     console.log('comment id :' + newComment._id);
-        
-    // }).clone()
+  
 
     await blogPost.findOne({_id: req.params.blogpostId}, (err, response) => {
         if(err) res.status(404).json({message : err.message})
-       console.log('from inside ' + response.title)
+     
        console.log('comment id :' + newComment._id);
        response.comments.push({commentId: newComment._id})
-       response.title = "mofifed"
        response.save();
     }).clone()
 
